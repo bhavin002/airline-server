@@ -7,7 +7,7 @@ export const appConfig = (): AppConfigProps => ({
   database: {
     hostName: process.env.DB_HOST_NAME || 'localhost',
     userName: process.env.USER_NAME || 'postgres',
-    password: process.env.PASSWORD || 'your_password',
+    password: process.env.PASSWORD || '2710',
     databaseName: process.env.DATABASE_NAME || 'air-line',
     port: parseInt(process.env.DB_PORT, 10) || 5432,
   },

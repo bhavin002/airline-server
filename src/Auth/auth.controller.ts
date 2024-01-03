@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './auth.service';
 import { CreateUserDto } from './dto/registration.dto';
@@ -6,7 +6,7 @@ import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
@@ -14,10 +14,10 @@ export class UserController {
       const user = await this.userService.createUser(createUserDto);
       return res.status(HttpStatus.CREATED).json({
         message: 'User registerd successfully',
-        user
+        user,
       });
     } catch (error) {
-      console.log("error in register",error);
+      console.log('error in register', error);
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: 'Error in registering user',
         error: error.message,
@@ -31,7 +31,7 @@ export class UserController {
       const token = await this.userService.login(loginDto);
       return res.status(HttpStatus.OK).json({
         message: 'login successfully',
-        token
+        token,
       });
     } catch (error) {
       return res.status(HttpStatus.UNAUTHORIZED).json({

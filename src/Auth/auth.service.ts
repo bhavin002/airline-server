@@ -11,9 +11,16 @@ import * as jwt from 'jsonwebtoken';
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const findUser = await this.userRepository.findOne({
+      where: { email: createUserDto.email },
+    });
+    console.log('findUser', findUser);
+    if (findUser) {
+      throw new UnauthorizedException('User already exists!');
+    }
     const user: User = new User();
     user.name = createUserDto.name;
     user.email = createUserDto.email;
@@ -22,12 +29,17 @@ export class UserService {
   }
 
   async login(loginDto: LoginDto): Promise<string> {
-    const user = await this.userRepository.findOne({ where: { email: loginDto.email } });
+    const user = await this.userRepository.findOne({
+      where: { email: loginDto.email },
+    });
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
 
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
