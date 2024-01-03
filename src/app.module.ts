@@ -7,6 +7,8 @@ import { AppService } from './app.service';
 import { UserModule } from './Auth/auth.module';
 import { User } from './Auth/entities/user.entity';
 import { appConfig } from './config/config'; // Import the new configuration file
+import { PassengerModule } from './passenger/passenger.module';
+import { Passenger } from './passenger/entity/passenger.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { appConfig } from './config/config'; // Import the new configuration fil
         port: configService.get<number>('database.port'),
         password: configService.get<string>('database.password'),
         username: configService.get<string>('database.userName'),
-        entities: [User],
+        entities: [User, Passenger],
         database: configService.get<string>('database.databaseName'),
         synchronize: true,
         logging: true,
@@ -30,6 +32,7 @@ import { appConfig } from './config/config'; // Import the new configuration fil
       inject: [ConfigService],
     }),
     UserModule,
+    PassengerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
