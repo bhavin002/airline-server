@@ -1,13 +1,23 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { CityService } from './city.service';
 import { Response } from 'express';
 import { CityDto } from './dto/city.dto';
+import { AuthGuard } from 'src/Auth/auth.guard';
 
 @Controller('City')
 export class CityController {
   constructor(private readonly cityService: CityService) {}
 
   @Post('add')
+  @UseGuards(AuthGuard)
   async addCity(@Body() addCityDto: CityDto, @Res() res: Response) {
     try {
       const City = await this.cityService.addCity(addCityDto);

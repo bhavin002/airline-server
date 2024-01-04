@@ -5,12 +5,13 @@ import { CreateUserDto } from './dto/registration.dto';
 import { User } from './entities/user.entity';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -55,10 +56,11 @@ export class UserService {
     return bcrypt.hash(password, saltRounds);
   }
 
-  private generateJwtToken(user: User): string {
+  private generateJwtToken(user: User): Promise<string> {
     const { id, email } = user;
     const payload = { id, email };
 
-    return jwt.sign(payload, 'your-secret-key', { expiresIn: '1h' });
+    // return jwt.sign(payload, 'your-secret-key', { expiresIn: '24h' });
+    return this.jwtService.signAsync(payload);
   }
 }
