@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Source } from './entity/source.entity';
 import { SourceDto } from './dto/source.dto';
 import { Repository } from 'typeorm';
-import { log } from 'console';
 
 @Injectable()
 export class SourceService {
@@ -15,7 +14,6 @@ export class SourceService {
   async addSource(addSource: SourceDto): Promise<SourceDto> {
     const source: SourceDto = new SourceDto();
     source.sourceName = addSource.sourceName;
-    log('source', source);
     return this.sourceRepository.save(source);
   }
 }
