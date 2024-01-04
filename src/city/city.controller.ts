@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
 import { CityService } from './city.service';
 import { Response } from 'express';
 import { CityDto } from './dto/city.dto';
@@ -19,6 +19,22 @@ export class CityController {
     } catch (error) {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         message: 'Error in creating City',
+        error,
+      });
+    }
+  }
+
+  @Get()
+  async getAllCities(@Res() res: Response) {
+    try {
+      const Cities = await this.cityService.getAllCities();
+      return res.status(HttpStatus.OK).json({
+        message: 'All Cities',
+        Cities,
+      });
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        message: 'Error in getting Cities',
         error,
       });
     }
