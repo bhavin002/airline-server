@@ -34,11 +34,11 @@ export class Flight {
   @Column()
   price: number;
 
-  @ManyToOne(() => City)
+  @ManyToOne(() => City, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'sourceID' })
   sourceCity: City;
 
-  @ManyToOne(() => City)
+  @ManyToOne(() => City, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'destinationID' })
   destinationCity: City;
 }
