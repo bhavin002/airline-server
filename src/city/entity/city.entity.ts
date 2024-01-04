@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Source {
+export class City {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  sourceName: string;
+  cityName: string;
 }

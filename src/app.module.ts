@@ -9,10 +9,8 @@ import { User } from './Auth/entities/user.entity';
 import { appConfig } from './config/config'; // Import the new configuration file
 import { PassengerModule } from './passenger/passenger.module';
 import { Passenger } from './passenger/entity/passenger.entity';
-import { SourceModule } from './source/source.module';
-import { Source } from './source/entity/source.entity';
-import { DestinationModule } from './destination/destination.module';
-import { Destination } from './destination/entity/destination.entity';
+import { CityModule } from './city/city.module';
+import { City } from './city/entity/city.entity';
 
 @Module({
   imports: [
@@ -28,7 +26,7 @@ import { Destination } from './destination/entity/destination.entity';
         port: configService.get<number>('database.port'),
         password: configService.get<string>('database.password'),
         username: configService.get<string>('database.userName'),
-        entities: [User, Passenger, Source, Destination],
+        entities: [User, Passenger, City],
         database: configService.get<string>('database.databaseName'),
         synchronize: true,
         logging: true,
@@ -37,8 +35,7 @@ import { Destination } from './destination/entity/destination.entity';
     }),
     UserModule,
     PassengerModule,
-    SourceModule,
-    DestinationModule,
+    CityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
