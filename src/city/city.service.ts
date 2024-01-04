@@ -16,4 +16,9 @@ export class CityService {
     City.cityName = addDestination.cityName;
     return this.destinationRepository.save(City);
   }
+
+  async getAllCities(): Promise<CityDto[]> {
+    const cities = this.destinationRepository.find();
+    return cities;
+  }
 }

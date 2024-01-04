@@ -11,6 +11,8 @@ import { PassengerModule } from './passenger/passenger.module';
 import { Passenger } from './passenger/entity/passenger.entity';
 import { CityModule } from './city/city.module';
 import { City } from './city/entity/city.entity';
+import { FlightModule } from './flight/flight.module';
+import { Flight } from './flight/entity/flight.entity';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import { City } from './city/entity/city.entity';
         port: configService.get<number>('database.port'),
         password: configService.get<string>('database.password'),
         username: configService.get<string>('database.userName'),
-        entities: [User, Passenger, City],
+        entities: [User, Passenger, City, Flight],
         database: configService.get<string>('database.databaseName'),
         synchronize: true,
         logging: true,
@@ -36,6 +38,7 @@ import { City } from './city/entity/city.entity';
     UserModule,
     PassengerModule,
     CityModule,
+    FlightModule,
   ],
   controllers: [AppController],
   providers: [AppService],
