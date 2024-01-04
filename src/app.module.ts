@@ -10,6 +10,7 @@ import { appConfig } from './config/config'; // Import the new configuration fil
 import { PassengerModule } from './passenger/passenger.module';
 import { Passenger } from './passenger/entity/passenger.entity';
 import { SourceModule } from './source/source.module';
+import { Source } from './source/entity/source.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { SourceModule } from './source/source.module';
         port: configService.get<number>('database.port'),
         password: configService.get<string>('database.password'),
         username: configService.get<string>('database.userName'),
-        entities: [User, Passenger],
+        entities: [User, Passenger, Source],
         database: configService.get<string>('database.databaseName'),
         synchronize: true,
         logging: true,

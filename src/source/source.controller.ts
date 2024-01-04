@@ -12,7 +12,7 @@ export class SourceController {
     try {
       const source = await this.sourceSerivce.addSource(soureDto);
       return res.status(HttpStatus.CREATED).json({
-        message: 'Passengers fetched successfully',
+        message: 'Source added successfully',
         source,
       });
     } catch (error) {

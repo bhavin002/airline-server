@@ -12,9 +12,9 @@ export class SourceService {
     private readonly sourceRepository: Repository<Source>,
   ) {}
 
-  async addSource(sourceDto: SourceDto): Promise<SourceDto> {
+  async addSource(addSource: SourceDto): Promise<SourceDto> {
     const source: SourceDto = new SourceDto();
-    source.sourceName = sourceDto.sourceName;
+    source.sourceName = addSource.sourceName;
     log('source', source);
     return this.sourceRepository.save(source);
   }
