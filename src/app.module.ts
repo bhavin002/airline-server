@@ -9,6 +9,7 @@ import { User } from './Auth/entities/user.entity';
 import { appConfig } from './config/config'; // Import the new configuration file
 import { PassengerModule } from './passenger/passenger.module';
 import { Passenger } from './passenger/entity/passenger.entity';
+import { SourceModule } from './source/source.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { Passenger } from './passenger/entity/passenger.entity';
     }),
     UserModule,
     PassengerModule,
+    SourceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
