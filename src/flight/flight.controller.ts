@@ -1,13 +1,23 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { FlightService } from './flight.service';
 import { FlightDto } from './dto/flight.dto';
 import { Response } from 'express';
+import { AuthGuard } from 'src/Auth/auth.guard';
 
 @Controller('flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}
 
   @Post('addFlight')
+  @UseGuards(AuthGuard)
   async addFlight(@Body() addFlight: FlightDto, @Res() res: Response) {
     try {
       const flight = await this.flightService.addFlight(addFlight);

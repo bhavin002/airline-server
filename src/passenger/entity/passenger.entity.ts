@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity()
 export class Passenger {
@@ -6,6 +6,7 @@ export class Passenger {
   id: string;
 
   @Column()
+  @Unique(['passportNumber', 'visaNumber', 'email', 'contact'])
   passportNumber: string;
 
   @Column()

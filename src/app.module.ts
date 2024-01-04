@@ -13,6 +13,8 @@ import { CityModule } from './city/city.module';
 import { City } from './city/entity/city.entity';
 import { FlightModule } from './flight/flight.module';
 import { Flight } from './flight/entity/flight.entity';
+import { AirportModule } from './airport/airport.module';
+import { Airport } from './airport/entity/airport.entity';
 
 @Module({
   imports: [
@@ -28,7 +30,7 @@ import { Flight } from './flight/entity/flight.entity';
         port: configService.get<number>('database.port'),
         password: configService.get<string>('database.password'),
         username: configService.get<string>('database.userName'),
-        entities: [User, Passenger, City, Flight],
+        entities: [User, Passenger, City, Flight, Airport],
         database: configService.get<string>('database.databaseName'),
         synchronize: true,
         logging: true,
@@ -39,6 +41,7 @@ import { Flight } from './flight/entity/flight.entity';
     PassengerModule,
     CityModule,
     FlightModule,
+    AirportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
