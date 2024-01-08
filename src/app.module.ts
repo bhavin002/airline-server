@@ -25,15 +25,13 @@ import { Airport } from './airport/entity/airport.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule], // Import ConfigModule
       useFactory: async (configService: ConfigService) => ({
-        type: 'postgres',
+        type: 'mysql',
         host: configService.get<string>('database.hostName'),
-        port: configService.get<number>('database.port'),
-        password: configService.get<string>('database.password'),
         username: configService.get<string>('database.userName'),
-        entities: [User, Passenger, City, Flight, Airport],
+        password: configService.get<string>('database.password'),
         database: configService.get<string>('database.databaseName'),
+        entities: [User, Passenger, City, Flight, Airport],
         synchronize: true,
-        logging: true,
       }),
       inject: [ConfigService],
     }),
