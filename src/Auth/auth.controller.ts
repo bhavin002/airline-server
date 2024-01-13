@@ -4,7 +4,7 @@ import { UserService } from './auth.service';
 import { CreateUserDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 
-@Controller('auth')
+@Controller('api/auth')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -28,10 +28,11 @@ export class UserController {
   @Post('login')
   async login(@Body() loginDto: LoginDto, @Res() res: Response) {
     try {
-      const token = await this.userService.login(loginDto);
+      const resData = await this.userService.login(loginDto);
       return res.status(HttpStatus.OK).json({
         message: 'login successfully',
-        token,
+        token: resData.token,
+        isAdmin: resData.isAdmin,
       });
     } catch (error) {
       return res.status(HttpStatus.UNAUTHORIZED).json({

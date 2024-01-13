@@ -29,7 +29,9 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async login(loginDto: LoginDto): Promise<string> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ [key: string]: string | boolean }> {
     const user = await this.userRepository.findOne({
       where: { email: loginDto.email },
     });
@@ -46,9 +48,9 @@ export class UserService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const token = this.generateJwtToken(user);
+    const token = await this.generateJwtToken(user);
 
-    return token;
+    return { token: token, isAdmin: user.isAdmin };
   }
 
   private async hashPassword(password: string): Promise<string> {
