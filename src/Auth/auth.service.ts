@@ -29,9 +29,18 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async login(
-    loginDto: LoginDto,
-  ): Promise<{ [key: string]: string | boolean }> {
+
+  async validOneUser(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+    if (!user) {
+      throw new UnauthorizedException('User not found!');
+    }
+    return user;
+  }
+
+  async login(loginDto: LoginDto): Promise<string> {
     const user = await this.userRepository.findOne({
       where: { email: loginDto.email },
     });
@@ -59,10 +68,27 @@ export class UserService {
   }
 
   private generateJwtToken(user: User): Promise<string> {
-    const { id, email } = user;
-    const payload = { id, email };
+    const { id, email,isAdmin } = user;
+    const payload = { id, email,isAdmin };
 
     // return jwt.sign(payload, 'your-secret-key', { expiresIn: '24h' });
     return this.jwtService.signAsync(payload);
   }
+
+  async decodeAuthToken(authToken: string): Promise<{ email: string }> {
+    try {
+      const decoded = this.jwtService.verify(authToken);
+      return decoded;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
+
+  async getUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+    });
+    return user;
+  }
+
 }
