@@ -29,6 +29,7 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+
   async validOneUser(email: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { email },
@@ -56,9 +57,9 @@ export class UserService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const token = this.generateJwtToken(user);
+    const token = await this.generateJwtToken(user);
 
-    return token;
+    return { token: token, isAdmin: user.isAdmin };
   }
 
   private async hashPassword(password: string): Promise<string> {

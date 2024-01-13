@@ -12,7 +12,7 @@ import { Response } from 'express';
 import { CityDto } from './dto/city.dto';
 import { AuthGuard } from 'src/Auth/auth.guard';
 
-@Controller('City')
+@Controller('api/city')
 export class CityController {
   constructor(private readonly cityService: CityService) {}
 

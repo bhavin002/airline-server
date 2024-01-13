@@ -12,7 +12,7 @@ import { FlightDto } from './dto/flight.dto';
 import { Response } from 'express';
 import { AuthGuard } from 'src/Auth/auth.guard';
 
-@Controller('flight')
+@Controller('api/flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}
 
