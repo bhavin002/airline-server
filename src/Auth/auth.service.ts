@@ -29,7 +29,6 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-
   async validOneUser(email: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { email },
@@ -40,7 +39,9 @@ export class UserService {
     return user;
   }
 
-  async login(loginDto: LoginDto): Promise<string> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ [key: string]: string | boolean }> {
     const user = await this.userRepository.findOne({
       where: { email: loginDto.email },
     });
@@ -68,8 +69,8 @@ export class UserService {
   }
 
   private generateJwtToken(user: User): Promise<string> {
-    const { id, email,isAdmin } = user;
-    const payload = { id, email,isAdmin };
+    const { id, email, isAdmin } = user;
+    const payload = { id, email, isAdmin };
 
     // return jwt.sign(payload, 'your-secret-key', { expiresIn: '24h' });
     return this.jwtService.signAsync(payload);
@@ -90,5 +91,4 @@ export class UserService {
     });
     return user;
   }
-
 }

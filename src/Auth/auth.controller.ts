@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Res, HttpStatus,Get,Headers } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpStatus,
+  Get,
+  Headers,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './auth.service';
 import { CreateUserDto } from './dto/registration.dto';
@@ -43,10 +51,13 @@ export class UserController {
   }
 
   @Get('validuser')
-  async getValidUser(@Headers('authorization') authToken: string, @Res() res: Response) {
+  async getValidUser(
+    @Headers('authorization') authToken: string,
+    @Res() res: Response,
+  ) {
     try {
-
       const token = authToken.split(' ')[1];
+
       const decodedUser = await this.userService.decodeAuthToken(token);
 
       const user = await this.userService.getUserByEmail(decodedUser.email);
@@ -61,6 +72,5 @@ export class UserController {
         error: error.message,
       });
     }
-  } 
-
+  }
 }
